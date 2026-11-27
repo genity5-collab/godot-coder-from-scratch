@@ -32,12 +32,16 @@ python src/train_tokenizer.py --input data/processed/train.txt --output tokenize
 
 Open `notebooks/train_from_scratch.ipynb`, enable a GPU, and run all cells. Save checkpoints to persistent storage. Colab GPU type and runtime limits are dynamic; Kaggle sessions are also time-limited, so training resumes from checkpoints.
 
+For the complete commands, smoke test, resume procedure, GPU out-of-memory fixes, and upload steps, read [`TRAINING.md`](TRAINING.md).
+
 The official-data path is reproducible and does not commit the upstream docs into this repository:
 
 ```bash
 python src/download_official_godot_docs.py --output data/raw/godot-docs --ref master
 python src/prepare_data.py --input data/raw/godot-docs --output data/processed
 ```
+
+Evaluation expects a real local checkpoint directory such as `checkpoints/godot-coder-30m`. If that directory does not exist, Transformers may interpret the path as a Hugging Face repository ID and return a confusing 401 error.
 
 ## Data licensing
 
