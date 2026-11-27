@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 import random
 
-EXTENSIONS = {".gd", ".gdshader", ".tscn", ".tres", ".md", ".txt"}
+EXTENSIONS = {".gd", ".gdshader", ".tscn", ".tres", ".md", ".rst", ".txt"}
 
 
 def main():
