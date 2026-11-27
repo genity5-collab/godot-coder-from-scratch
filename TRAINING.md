@@ -10,7 +10,9 @@ Create a new notebook, select a GPU, and run these cells in order.
 !nvidia-smi
 !git clone https://github.com/genity5-collab/godot-coder-from-scratch.git
 %cd godot-coder-from-scratch
-!pip install -q -U torch transformers datasets tokenizers accelerate huggingface_hub safetensors
+# Keep the platform-provided PyTorch/CUDA build. Audio and vision are not used.
+!pip uninstall -y -q torchaudio torchvision || true
+!pip install -q -U transformers datasets tokenizers accelerate huggingface_hub safetensors
 ```
 
 Download official Godot documentation and build the dataset:
@@ -90,7 +92,9 @@ Create a Kaggle Notebook, set **Settings → Accelerator → GPU**, and run:
 !nvidia-smi
 !git clone https://github.com/genity5-collab/godot-coder-from-scratch.git
 %cd godot-coder-from-scratch
-!pip install -q -U torch transformers datasets tokenizers accelerate huggingface_hub safetensors
+# Keep the platform-provided PyTorch/CUDA build. Audio and vision are not used.
+!pip uninstall -y -q torchaudio torchvision || true
+!pip install -q -U transformers datasets tokenizers accelerate huggingface_hub safetensors
 ```
 
 Then run the same official-data, tokenizer, smoke-test, and real-training commands above. To preserve results, use **Save Version → Save & Run All**, and download the `checkpoints/` directory from the notebook output before the session ends.

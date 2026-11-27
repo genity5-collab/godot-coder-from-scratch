@@ -34,6 +34,8 @@ Open `notebooks/train_from_scratch.ipynb`, enable a GPU, and run all cells. Save
 
 For the complete commands, smoke test, resume procedure, GPU out-of-memory fixes, and upload steps, read [`TRAINING.md`](TRAINING.md).
 
+This is text-only training. Do not upgrade the platform's PyTorch package in Colab or Kaggle. Remove optional `torchaudio` and `torchvision` packages if Transformers reports a CUDA-version mismatch.
+
 The official-data path is reproducible and does not commit the upstream docs into this repository:
 
 ```bash
