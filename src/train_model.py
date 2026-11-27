@@ -1,4 +1,5 @@
 import argparse
+import inspect
 from pathlib import Path
 
 from datasets import load_dataset
@@ -84,18 +85,17 @@ def main():
     model = GPT2LMHeadModel(config)  # Deliberately random initialization.
     collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
     use_fp16 = __import__('torch').cuda.is_available()
-    training = TrainingArguments(
+    supported_args = inspect.signature(TrainingArguments.__init__).parameters
+    training_kwargs = dict(
         output_dir=str(args.output),
         per_device_train_batch_size=args.batch_size,
         per_device_eval_batch_size=args.batch_size,
         gradient_accumulation_steps=args.grad_accumulation,
         learning_rate=args.learning_rate,
         weight_decay=0.1,
-        warmup_ratio=0.02,
         num_train_epochs=args.epochs,
         max_steps=args.max_steps,
         logging_steps=20,
-        eval_strategy='steps',
         eval_steps=args.eval_steps,
         save_strategy='steps',
         save_steps=args.save_steps,
@@ -104,6 +104,17 @@ def main():
         report_to='none',
         dataloader_num_workers=2,
     )
+    if 'warmup_ratio' in supported_args:
+        training_kwargs['warmup_ratio'] = 0.02
+    elif 'warmup_steps' in supported_args:
+        training_kwargs['warmup_steps'] = 100
+    if 'eval_strategy' in supported_args:
+        training_kwargs['eval_strategy'] = 'steps'
+    elif 'evaluation_strategy' in supported_args:
+        training_kwargs['evaluation_strategy'] = 'steps'
+    training = TrainingArguments(**{
+        key: value for key, value in training_kwargs.items() if key in supported_args
+    })
     trainer = Trainer(
         model=model,
         args=training,
