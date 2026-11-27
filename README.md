@@ -6,6 +6,10 @@ A research project for training a small decoder-only language model from randoml
 
 This project trains a new tokenizer and a new GPT-style model. It does **not** load pretrained model weights. The first target is a 30M-parameter model that can learn GDScript syntax and Godot API patterns. It is an experiment, not a replacement for a large coding assistant.
 
+## Model repository
+
+The private Hugging Face model repository is [Dosmallelfso/godot-coder-30m](https://huggingface.co/Dosmallelfso/godot-coder-30m).
+
 ## Workflow
 
 1. Add licensed Godot/GDScript sources to `data/raw/`.
